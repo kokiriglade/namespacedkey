@@ -6,7 +6,8 @@ use crate::{
 };
 use std::{
     convert::TryFrom,
-    fmt::{self, Display, Formatter},
+    fmt::{self, Display, Formatter, Write},
+    str::FromStr,
 };
 
 /// `NamespacedKey` is an identifier composed of a namespace and a path
@@ -35,8 +36,8 @@ impl NamespacedKey {
     /// Creates a new `NamespacedKey` from a `namespace` and a `path`.
     pub fn new<N, P>(namespace: N, path: P) -> Result<Self, InvalidKeyError>
     where
-        N: AsRef<str>,
-        P: AsRef<str>,
+        N: AsRef<str> + Into<String>,
+        P: AsRef<str> + Into<String>,
     {
         let ns = namespace.as_ref();
         if let Some(indices) = check_string(ns, VALID_NAMESPACE_CHARACTERS) {
@@ -63,8 +64,8 @@ impl NamespacedKey {
         }
 
         Ok(Self {
-            namespace: ns.to_owned(),
-            path: p.to_owned(),
+            namespace: ns.into(),
+            path: p.into(),
         })
     }
 
@@ -80,8 +81,23 @@ impl NamespacedKey {
 
     // Creates a representation of this `NamespacedKey` as a string, separating
     // the namespace and path using the `separator` character.
-    pub fn as_string(&self, separator: char) -> String {
+    pub fn to_string_with_separator(&self, separator: char) -> String {
         format!("{}{}{}", &self.namespace, separator, &self.path)
+    }
+
+    /// Try to parse using an arbitrary `separator` character, e.g. `"foo>bar"`
+    /// with `separator='>'`.
+    pub fn from_str_with_separator(
+        string: &str,
+        separator: char,
+    ) -> Result<Self, InvalidKeyError> {
+        if let Some((ns, p)) = string.split_once(separator) {
+            NamespacedKey::new(ns, p)
+        } else {
+            Err(InvalidKeyError::new(string, "").with_message(format!(
+                "Missing separator `{separator}` in key: `{string}`"
+            )))
+        }
     }
 }
 
@@ -93,18 +109,35 @@ impl Keyed for NamespacedKey {
 
 impl Display for NamespacedKey {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.as_string(':'))
+        f.write_str(&self.namespace)?;
+        f.write_char(':')?;
+        f.write_str(&self.path)
     }
 }
 
 impl<N, P> TryFrom<(N, P)> for NamespacedKey
 where
-    N: AsRef<str>,
-    P: AsRef<str>,
+    N: AsRef<str> + Into<String>,
+    P: AsRef<str> + Into<String>,
 {
     type Error = InvalidKeyError;
 
     fn try_from((ns, p): (N, P)) -> Result<Self, Self::Error> {
         NamespacedKey::new(ns, p)
+    }
+}
+
+impl TryFrom<&str> for NamespacedKey {
+    type Error = InvalidKeyError;
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
+        NamespacedKey::from_str(s)
+    }
+}
+
+impl FromStr for NamespacedKey {
+    type Err = InvalidKeyError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        NamespacedKey::from_str_with_separator(s, ':')
     }
 }

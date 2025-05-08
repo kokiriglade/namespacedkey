@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use namespacedkey::{Keyed, NamespacedKey};
 
 #[test]
@@ -45,9 +47,9 @@ fn display_impl_matches_to_string() {
 }
 
 #[test]
-fn to_string_equals_as_string() {
+fn to_string() {
     let key = NamespacedKey::new("namespace", "path").unwrap();
-    assert_eq!(key.to_string(), key.as_string(':'))
+    assert_eq!(key.to_string(), key.to_string_with_separator(':'))
 }
 
 #[test]
@@ -75,4 +77,19 @@ fn various_valid_and_invalid() {
         let result = NamespacedKey::new(ns, p);
         assert_eq!(result.is_ok(), should_be_ok, "ns={:?}, p={:?}", ns, p);
     }
+}
+
+#[test]
+fn from_str() {
+    let key_result = NamespacedKey::from_str("namespace:path");
+
+    let key = match key_result {
+        Ok(key) => key,
+        Err(error) => {
+            panic!("Failed to parse NamespacedKey from str: {error:?}")
+        }
+    };
+
+    assert_eq!(key.namespace(), "namespace");
+    assert_eq!(key.path(), "path");
 }
