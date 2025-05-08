@@ -9,6 +9,22 @@ use std::{
     fmt::{self, Display, Formatter},
 };
 
+/// `NamespacedKey` is an identifier composed of a namespace and a path
+///
+/// # Examples
+///
+/// ```
+/// # use namespacedkey::NamespacedKey;
+///
+/// let key_result = NamespacedKey::new("namespace", "path");
+///
+/// let key = match key_result {
+///     Ok(key) => key,
+///     Err(error) => panic!("Problem creating key: {error:?}"),
+/// };
+///
+/// assert_eq!(key.to_string(), "namespace:path");
+/// ```
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct NamespacedKey {
     namespace: String,
@@ -16,6 +32,7 @@ pub struct NamespacedKey {
 }
 
 impl NamespacedKey {
+    /// Creates a new `NamespacedKey` from a `namespace` and a `path`.
     pub fn new<N, P>(namespace: N, path: P) -> Result<Self, InvalidKeyError>
     where
         N: AsRef<str>,
@@ -51,14 +68,18 @@ impl NamespacedKey {
         })
     }
 
+    /// Gets the namespace of this `NamespacedKey`.
     pub fn namespace(&self) -> &str {
         &self.namespace
     }
 
+    /// Gets the path of this `NamespacedKey`.
     pub fn path(&self) -> &str {
         &self.path
     }
 
+    // Creates a representation of this `NamespacedKey` as a string, separating
+    // the namespace and path using the `separator` character.
     pub fn as_string(&self, separator: char) -> String {
         format!("{}{}{}", &self.namespace, separator, &self.path)
     }

@@ -26,6 +26,6 @@ use crate::NamespacedKey;
 /// assert_eq!(my.key().path(), "bar");
 /// ```
 pub trait Keyed {
-    /// Gets the `NamespacedKey`.
+    /// Gets the `NamespacedKey` associated with this.
     fn key(&self) -> &NamespacedKey;
 }
