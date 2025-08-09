@@ -1,10 +1,10 @@
 [package]
 name = "namespacedkey"
-version = "1.0.0"
+version = "1.0.1"
 exclude = ["tools/", "crates/", ".github/"]
 edition = "2024"
 authors = ["kokiriglade <git@kokirigla.de>"]
-description = "NamespacedKey is an identifier composed of a namespace and a path"
+description = "Identifiers composed of a namespace and a value"
 license = "MIT"
 repository = "https://github.com/kokiriglade/namespacedkey"
 readme = "README.md"
