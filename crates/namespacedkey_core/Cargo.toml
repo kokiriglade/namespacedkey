@@ -1,0 +1,17 @@
+[package]
+name = "namespacedkey_core"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.88.0"
+
+[dependencies]
+internment.workspace = true
+serde = { workspace = true, optional = true }
+thiserror.workspace = true
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[lints]
+workspace = true

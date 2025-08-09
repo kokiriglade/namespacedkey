@@ -1,0 +1,18 @@
+[package]
+name = "namespacedkey_macro"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.88.0"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+namespacedkey_core = { path = "../namespacedkey_core", version = "1.0.0" }
+
+proc-macro2.workspace = true
+quote.workspace = true
+syn.workspace = true
+
+[lints]
+workspace = true

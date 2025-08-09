@@ -1,0 +1,13 @@
+[package]
+name = "namespacedkey_macro_test"
+version = "1.0.0"
+edition = "2024"
+publish = false
+rust-version = "1.88.0"
+
+[dependencies]
+namespacedkey_core = { path = "../namespacedkey_core", version = "1.0.0" }
+namespacedkey_macro = { path = "../namespacedkey_macro", version = "1.0.0" }
+
+[lints]
+workspace = true

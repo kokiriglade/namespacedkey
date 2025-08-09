@@ -1,8 +1,4 @@
-pub mod constants;
-pub mod error;
-mod keyed;
-mod namespaced_key;
-pub mod util;
+pub use namespacedkey_core;
 
-pub use keyed::Keyed;
-pub use namespaced_key::NamespacedKey;
+#[cfg(feature = "macro")]
+pub use namespacedkey_macro;
