@@ -53,4 +53,4 @@ udeps:
 
 # Publish all crates to crates.io.
 publish:
-    ./publish.sh
+    tools/publish.sh

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # https://github.com/bevyengine/bevy/blob/acc8f6d45547f3e9cbc0b1fc5868a3e1b70cf26b/tools/publish.sh
 if [ -n "$(git status --porcelain)" ]; then
     echo "You have local changes!"
