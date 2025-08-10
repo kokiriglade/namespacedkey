@@ -78,11 +78,11 @@ pub fn define_identifier(input: TokenStream) -> TokenStream {
     let fns = entries.into_iter().map(|Entry { vis, ident, value }| {
         let fn_name = format_ident!("id_{}", ident);
         quote! {
-            #vis fn #fn_name() -> namespacedkey_core::Identifier<#ty> {
-                static ONCE: ::std::sync::OnceLock<namespacedkey_core::Identifier<#ty>> =
+            #vis fn #fn_name() -> namespacedkey::Identifier<#ty> {
+                static ONCE: ::std::sync::OnceLock<namespacedkey::Identifier<#ty>> =
                     ::std::sync::OnceLock::new();
                 ONCE
-                    .get_or_init(|| <namespacedkey_core::Identifier<#ty> as ::core::str::FromStr>::from_str(#value).unwrap())
+                    .get_or_init(|| <namespacedkey::Identifier<#ty> as ::core::str::FromStr>::from_str(#value).unwrap())
                     .clone()
             }
         }

@@ -6,8 +6,7 @@ publish = false
 rust-version = "1.88.0"
 
 [dependencies]
-namespacedkey_core = { path = "../namespacedkey_core", version = "1.0.0" }
-namespacedkey_macro = { path = "../namespacedkey_macro", version = "1.0.0" }
+namespacedkey = { path = "../..", version = "1.0.1", features = ["macro"] }
 
 [lints]
 workspace = true

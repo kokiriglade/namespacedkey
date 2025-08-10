@@ -1,7 +1,6 @@
 use std::str::FromStr;
 
-use namespacedkey_core::Identifier;
-use namespacedkey_macro::define_identifier;
+use namespacedkey::{Identifier, define_identifier};
 
 #[test]
 fn define_identifier_works() {

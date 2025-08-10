@@ -1,6 +1,6 @@
 [package]
 name = "namespacedkey_macro"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2024"
 authors = ["kokiriglade <git@kokirigla.de>"]
 description = "Identifiers composed of a namespace and a value"
