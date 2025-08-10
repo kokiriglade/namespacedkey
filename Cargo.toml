@@ -1,6 +1,6 @@
 [package]
 name = "namespacedkey"
-version = "1.0.1"
+version = "1.0.2"
 exclude = ["tools/", "crates/", ".github/"]
 edition = "2024"
 authors = ["kokiriglade <git@kokirigla.de>"]
@@ -14,7 +14,7 @@ rust-version = "1.88.0"
 namespacedkey_core = { default-features = false, features = [
     "serde",
 ], path = "crates/namespacedkey_core", version = "1.0.0" }
-namespacedkey_macro = { path = "crates/namespacedkey_macro", version = "1.0.0", optional = true }
+namespacedkey_macro = { path = "crates/namespacedkey_macro", version = "1.0.1", optional = true }
 
 [features]
 default = []
